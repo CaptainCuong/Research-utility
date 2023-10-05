@@ -1,12 +1,17 @@
 '''
-Assume that a object named "cfg" has three attributes
+Assume that a object named "my_obj" has three attributes
 ['att1', 'att2', 'att3']
 
 Print out:
-cfg.att1
-cfg.att2
-cfg.att3
+my_obj.att1
+my_obj.att2
+my_obj.att3
 '''
-for key in list(cfg.keys()):
-    print('-'*20+f' {key} '+'-'*20)
-    print(getattr(cfg, key))
+
+# Print the values of all attributes
+for attr in dir(my_obj):
+    # Skip special attributes that start with '__'
+    if not attr.startswith("__"):
+        value = getattr(my_obj, attr)
+        print('-'*70)
+        print(f"{attr}: {value}")
