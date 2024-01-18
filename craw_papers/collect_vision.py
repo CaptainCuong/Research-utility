@@ -4,8 +4,8 @@ import pandas as pd
 import json
 from tqdm import tqdm
 
-year = 2021
-venue = 'acl'
+year = 2020
+venue = 'ICCV'
 
 venue = venue.upper()
 assert venue in ['CVPR','WACV','ICCV']
