@@ -1,7 +1,7 @@
 import pandas as pd
 
-year = 2019
-venue = "aaai"
+year = 2023
+venue = "uai"
 '''
 [acl,emnlp,naacl,eacl,
 neurips,icml,iclr,

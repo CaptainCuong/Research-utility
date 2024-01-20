@@ -5,12 +5,26 @@ from collections import Counter
 import re
 import pandas as pd
 
-year = 2022
+year = 2020
 column = 'title'
-venue = 'neurips' # ['cvpr','acl','emnlp','neurips','icml','iclr']
+venue = 'all'
+'''
+[
+all,
+acl,emnlp,naacl,eacl,
+neurips,icml,iclr,
+cvpr,iccv,wacv,
+aaai,ijcai,uai,
+aistats
+]
+'''
 rank_file = 'selective' # ['full','selective']
+assert not(rank_file == 'full' and venue == 'all'), 'Do not support search full for all venues'
 
-df = pd.read_csv(f'{venue}{year}_{rank_file}.csv')
+if venue != 'all':
+    df = pd.read_csv(f'{venue}{year}_{rank_file}.csv')
+else:
+    df = pd.read_csv(f'all_{rank_file}.csv')
 
 # Combine 'title' and 'authors' columns into a single column 'text'
 df['text'] = df['title']
@@ -31,4 +45,7 @@ for word, count in most_common_words:
     word_count.append(count)
     print(f"{word}: {count}")
 
-pd.DataFrame({'word':word_list,'count':word_count}).to_csv(f'{venue.lower()}{year}_rank_keyword.csv',index=False)
+if venue != 'all':
+    pd.DataFrame({'word':word_list,'count':word_count}).to_csv(f'{venue.lower()}{year}_rank_keyword.csv',index=False)
+else:
+    pd.DataFrame({'word':word_list,'count':word_count}).to_csv(f'{venue.lower()}_rank_keyword.csv',index=False)

@@ -5,10 +5,10 @@ import json
 from tqdm import tqdm
 from urllib.request import Request, urlopen
 
-year = 2023
+years = [2023,2022,2021,2020]
 
-proc_num = 36 + year-2022
-def get_title_authors_from_venue():
+def get_title_authors_from_venue(year):
+    proc_num = 36 + year-2022
     hdr = {'User-Agent': 'Mozilla/5.0'}
     proc_url = f"https://aaai.org/proceeding/aaai-{proc_num}-{year}/"
     req = Request(proc_url,headers=hdr)
@@ -24,7 +24,7 @@ def get_title_authors_from_venue():
             paper_title = paper_info.find('h5').find('a').get_text()
             authors = paper_info.find('span').find('p').get_text()
             paper_info_lst.append((paper_title, authors))
-    df = pd.DataFrame(paper_info_lst, columns=['title',  'authors'])
+    df = pd.DataFrame(paper_info_lst, columns=['title', 'authors'])
     return df
 
 def get_title_authors_from_venue_2023():
@@ -47,13 +47,13 @@ def get_title_authors_from_venue_2023():
     return df
 
 def main():
-    if year != 2023:
-        df = get_title_authors_from_venue()
-    else:
-        df = get_title_authors_from_venue_2023()
-    df.to_csv(f'aaai{year}_full.csv', index=False, columns=[
-              'title', 'authors'])
-
+    for year in years:
+        if year != 2023:
+            df = get_title_authors_from_venue(year)
+        else:
+            df = get_title_authors_from_venue_2023()
+        df.to_csv(f'aaai{year}_full.csv', index=False, columns=[
+                  'title', 'authors'])
 
 if __name__ == "__main__":
     main()

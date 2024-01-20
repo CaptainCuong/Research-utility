@@ -5,9 +5,9 @@ import json
 from tqdm import tqdm
 from urllib.request import Request, urlopen
 
-year = 2022
+years = [2023,2022,2021,2020]
 
-def access_venue():
+def access_venue(year):
     hdr = {'User-Agent': 'Mozilla/5.0'}
     proc_url = f"https://aistats.org/aistats{year}/accepted.html"
     req = Request(proc_url,headers=hdr)
@@ -26,10 +26,10 @@ def get_title_authors_from_venue(soup):
     return df
 
 def main():
-    df = access_venue()
-    df.to_csv(f'aistats{year}_full.csv', index=False, columns=[
-              'title', 'authors'])
-
+    for year in years:
+        df = access_venue(year)
+        df.to_csv(f'aistats{year}_full.csv', index=False, columns=[
+                  'title', 'authors'])
 
 if __name__ == "__main__":
     main()
