@@ -4,7 +4,7 @@ import pandas as pd
 
 year = 2023
 column = 'title'
-venue = 'all'
+venue = 'acl'
 time_all = [2020,2023]
 assert time_all[1] > time_all[0]
 '''
@@ -19,17 +19,32 @@ aistats
 '''
 
 # custom keywords
-keywords = [['optimal'],['transpo']]
+# keywords = [['optimal'],['transp'],['robust','adver','attack']]
+keywords = [['adversarial'],['bandit','reinfor','agent']]
+keywords = [['gromov'],['wasserstein']]
+keywords = [['few'],['shot'],['robust']]
+keywords = [['density'],['estima']]
+keywords = [['advers'],['robust']]
+keywords = [['knowledge']]
+keywords = [['adver'],['defen']]
+keywords = [['energy'],['base']]
+keywords = [['explor'],['the'],['role']]
+keywords = [['advers'],['robust']]
+keywords = [['machine'],['transla']]
+keywords = [['low'],['resour']]
+keywords = [['reprogra']]
+keywords = [['translation']]
 ex_keywords = ['prompt','image','multimodal','bench','node','graph','vae',
                'diffusion','bandit','reinforce','language','pre-train',
                'off-poli','dataset','federate','video','scene','caption',
                'amorti']
-ex_keywords = []
 '''
 Keyword bank:
 shift, robust, adversa, efficient, priva, shot, fair, safe, nois, defense, certif
 perturb, transferability, distill, memory, fast
-optimization, stochastic, bayesian, gradient, convex, minimax, convergence, constrain, black-box, minima, SGD, noise
+optimization, stochastic, bayesian, gradient, convex, minimax, convergence, constraint
+black-box, minima, noise, gradient clipping, overparameterized, stepsize
+(local|decentralized|distributed|private|adaptive|asynchronous|implicit regularization) SGD, SGD (noise|dynamics|momentum)
 combinatorial,bilevel,rate,local,linear,proximal,submodular
 reinforcement learning, agent, arm, bandit, imitat
 open-set, subset, coreset
@@ -46,14 +61,19 @@ select, sampl
 boost
 bayes
 project
-(unbalanced|robust|hierarchical|entropic) optimal transport, optimal transport (alignment|distances), optimal partial transport
+statistical (analysis|inference|rate|estimation|guarantees), statistically (Efficient|robust|significant|consistent|meaningful|optimal)
+(unbalanced|robust|hierarchical|entropic|low-rank|near-) optimal transport, optimal transport (alignment|distances), optimal partial transport
 sliced wasserstein, wasserstein (barycenters|gradient flow|distributionally robust)
 information-theoretic (generalization bounds), information (bottleneck|decomposition), (mutual|partial) information
-causal effect indentification/regularization, discovery, interventions, treatment, independence, inference, additive noise model, 
+causal effect indentification/regularization, treatment, independence, additive noise model, causal mediation analysis
+Event Causality Identification, linear causal models
+causal (inference|discovery|reasoning|models|structure|analysis|interventions|estimation|representation|bayesian)
+structural causal models, invariant causal structure, spurious correlation detection, surface similarity/correlation,
+(unobserved|latent) confounders
+Counterfactual
+(latent|instrumental|unobserved|control|causal) variable
 Partially Observable Markov Decision Process(POMDPs), zero-sum markov games
 (neural|gaussian) process, variational gaussian process
-invariant causal structure, spurious correlation detection, surface similarity/correlation,
-counter, counterfactual
 calibrat, certain, epistemic, quantifi, confor, active, surrogate
 temperature
 search
@@ -89,7 +109,10 @@ def extract_venue_and_year(filename):
 
 def merge_csv_files(directory):
     # Get a list of all CSV files in the directory
-    csv_files = [file for file in os.listdir(directory) if file.endswith('_full.csv')]
+    if venue == "all":
+        csv_files = [file for file in os.listdir(directory) if file.endswith('_full.csv')]
+    else:
+        csv_files = [file for file in os.listdir(directory) if file.endswith('_full.csv') and file.startswith(venue)]
 
     # Check if there are any CSV files in the directory
     if not csv_files:
@@ -111,10 +134,7 @@ def merge_csv_files(directory):
 
     return merged_data
 
-if venue == 'all':
-    df = merge_csv_files('.')
-else:
-    df = pd.read_csv(f'{venue}{year}_full.csv')
+df = merge_csv_files('.')
 df = df.dropna(subset=[column])
 
 def is_valid_string(input_string, list_A, list_B):
@@ -133,9 +153,4 @@ matched = df[column].apply(lambda x: is_valid_string(x.lower(), keywords, ex_key
 print(f'Number of match: {matched.sum()}')
 df = df[matched > 0]
 
-if venue != 'all':
-    df['year'] = [year for i in range(len(df.index))]
-    df['venue'] = [venue.upper()+str(year)[-2:] if venue != 'neurips' else 'NeurIPS'+str(year)[-2:] for i in range(len(df.index))]
-    df[['title','venue']].to_csv(f'{venue}{year}_selective.csv', index=False)
-else:
-    df[['title','venue']].to_csv(f'all_selective.csv', index=False)
+df[['title','venue']].to_csv(f'{venue}_selective.csv', index=False)

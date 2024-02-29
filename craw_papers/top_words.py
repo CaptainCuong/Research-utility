@@ -5,9 +5,9 @@ from collections import Counter
 import re
 import pandas as pd
 
-year = 2020
+year = 2023
 column = 'title'
-venue = 'all'
+venue = 'ecai'
 '''
 [
 all,
@@ -18,7 +18,7 @@ aaai,ijcai,uai,
 aistats
 ]
 '''
-rank_file = 'selective' # ['full','selective']
+rank_file = 'full' # ['full','selective']
 assert not(rank_file == 'full' and venue == 'all'), 'Do not support search full for all venues'
 
 if venue != 'all':
