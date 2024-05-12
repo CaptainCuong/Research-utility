@@ -8,9 +8,10 @@ venues = ['nips','icml','iclr']
 venues = ['atal']
 venues = ['cvpr','eccv','iccv','wacv']
 venues = ['aaai']
-venues = ['acl','naacl','coling','eacl','conll','emnlp']
-venues = ['csur','pami','ijcv','tip','tsp','tkde','tnn','paa','tmi']
+venues = ['acl','naacl','coling_conf','eacl','conll','emnlp']
+venues = ['csur','pami','ijcv','tip','tsp','tkde','tnn','paa','tmi','jmlr','coling_jour','datamine']
 venues = ['all']
+
 time_all = [2020,2024]
 assert time_all[1] >= time_all[0]
 
@@ -123,7 +124,7 @@ keywords = [['adaptation'],['classifi','detect']]
 keywords = [['increme','continual'],['classif','detection']]
 keywords = [['bayesian']]
 keywords = [['survey'],['event','timeline','diffusion']]
-keywords = [['survey'],['continual']]
+keywords = [['survey'],['trust','fair']]
 ex_keywords = ['prompt','image','multimodal','bench','node','graph','vae',
                'diffusion','bandit','reinforce','language','pre-train',
                'off-poli','dataset','federate','video','scene','caption',
