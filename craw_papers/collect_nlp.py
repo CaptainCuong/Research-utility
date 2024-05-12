@@ -8,8 +8,8 @@ import re
 import time
 import random
 
-years = [2019,2020]
-venues = ['emnlp','acl']
+years = [2024]
+venues = ['eacl']
 cite_query = False
 for venue in venues:
     assert venue in ['acl','emnlp','anlp','naacl','eacl','aacl','alta','bionlp','blackboxnlp','clinicalnlp','eamt','amta','textgraphs']

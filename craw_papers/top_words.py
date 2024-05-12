@@ -7,7 +7,7 @@ import pandas as pd
 
 year = 2023
 column = 'title'
-venue = 'ecai'
+venue = 'acl'
 '''
 [
 all,
@@ -22,7 +22,10 @@ rank_file = 'full' # ['full','selective']
 assert not(rank_file == 'full' and venue == 'all'), 'Do not support search full for all venues'
 
 if venue != 'all':
-    df = pd.read_csv(f'{venue}{year}_{rank_file}.csv')
+    if rank_file != 'full':
+        df = pd.read_csv(f'{venue}_{rank_file}.csv')
+    else:
+        df = pd.read_csv(f'{venue}{year}_{rank_file}.csv')
 else:
     df = pd.read_csv(f'all_{rank_file}.csv')
 
@@ -30,8 +33,9 @@ else:
 df['text'] = df['title']
 
 # Tokenize the words and remove stop words
-stop_words = set(stopwords.words('english'))
-df['text'] = df['text'].apply(lambda x: [word.lower() for word in word_tokenize(x) if word.isalnum() and word.lower() not in stop_words])
+# stop_words = set(stopwords.words('english'))
+# df['text'] = df['text'].apply(lambda x: [word.lower() for word in word_tokenize(x) if word.isalnum() and word.lower() not in stop_words])
+df['text'] = df['text'].apply(lambda x: re.sub('[:"!?,.()-]', '', x.lower()).split(' '))
 
 # Count the occurrences of each word
 word_counts = Counter(word for words in df['text'] for word in words)
@@ -45,7 +49,4 @@ for word, count in most_common_words:
     word_count.append(count)
     print(f"{word}: {count}")
 
-if venue != 'all':
-    pd.DataFrame({'word':word_list,'count':word_count}).to_csv(f'{venue.lower()}{year}_rank_keyword.csv',index=False)
-else:
-    pd.DataFrame({'word':word_list,'count':word_count}).to_csv(f'{venue.lower()}_rank_keyword.csv',index=False)
+pd.DataFrame({'word':word_list,'count':word_count}).to_csv(f'{venue.lower()}_rank_keyword.csv',index=False)
