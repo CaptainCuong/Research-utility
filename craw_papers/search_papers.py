@@ -3,17 +3,57 @@ import os
 import pandas as pd
 
 column = 'title'
-venues = ['aaai','ijcai','uai']
-venues = ['nips','icml','iclr']
-venues = ['atal']
-venues = ['cvpr','eccv','iccv','wacv']
-venues = ['aaai']
-venues = ['acl','naacl','coling_conf','eacl','conll','emnlp']
-venues = ['csur','pami','ijcv','tip','tsp','tkde','tnn','paa','tmi','jmlr','coling_jour','datamine']
-venues = ['all']
+# Journals
+venues = ["ai","tnn","jmlr","tcyb","natmi","pr","ijon","jmlr","tfs","nca","apin"] # Artificial Intelligence
+venues = ["colingjour","tacl","csl","talip","lre"] # Language
+venues = ["tsp","tcsv","taslp","jstsp","pami"]# Pattern Recognition & Signal Processing
+venues = ["tip","ijcv","icip","jvcir","paa","tmi","mia","tvcg","tog","cgf"]# Computer Vision & Image Processing
+venues = ["compsec","ieeesp","tdsc","tifsjour","istr"] # Security
+venues = ["csur","air","igtr","arcras","arc","widm","rsl","rss","intpolrev","nrhm","oir","siamrev","ker"] # Survey
+venues = ["kbs","snam","jbd","kais","tist","datamine","tkde","bigdatama","ipm","semweb"] # Big Data & Data Mining
+venues = ["geb", "sigecom","dsj","jet","jasss","ijitdm","dga","scw"] # Game Theory
+venues = ["tac","automatica","ieeejas","tcst","tcns","jirs"] # Automation & Control Theory
 
-time_all = [2020,2024]
-assert time_all[1] >= time_all[0]
+# Conferences
+venues = ['aaai','ijcai','uai','aistats','ecai'] # Artificial Intelligence
+venues = ['www','wsdm'] # World Wide Web
+venues = ['kdd','icdm','cikm','pkdd','pakdd','sdm'] # Data Mining
+venues = ['bigdataconf'] # Big Data
+venues = ['sigir','jcdl','ecir','icadl'] # Information Retrieval
+venues = ['nips','icml','iclr'] # Machine Learning
+venues = ['interspeech','icassp'] # Speech
+venues = ['sp','tifsconf','ccs','uss','ndss'] # Security
+venues = ['fat'] # ACM Conference on Fairness, Accountability and Transparency
+venues = ['chi'] # Human Computer Interaction
+venues = ['isaga','gdn'] # Game Theory and Decision Theory
+venues = ['iros','icra','atal'] # Reinforcement Learning
+venues = ['cvpr','iccv','eccv','wacv','siggraph','siggrapha'] # Computer Vision
+venues = ['acl','naacl','colingconf', 'eacl','conll','emnlp','lrec',
+          'wmt','semeval','conll','slt','blackboxnlp','sigdial','inlg',
+          'rep4nlp','bea'] # NLP
+venues = ['mm'] # Multimedia
+venues = ['cdc'] # Automation & Control Theory
+
+###################################################
+venues = ["csur","air","igtr","arcras","arc","widm","rsl","rss","intpolrev","nrhm","oir","siamrev","ker"]
+venues = ["geb", "sigecom","dsj","jet","jasss","ijitdm","dga","scw",
+            'isaga','gdn']
+venues = ['acl','naacl','colingconf', 'eacl','emnlp']
+venues = ['icml','iclr','nips']
+venues = ['www','wsdm','kdd','icdm','cikm','pkdd','pakdd','sdm']
+venues = ['www']
+venues = ['www','kdd','icdm']
+venues = ['cvpr','iccv','eccv','wacv','siggraph','siggrapha']
+venues = ['all']
+venues = ['acl','emnlp','naacl','eacl','colingconf']
+venues = ['acl','naacl','colingconf', 'eacl','emnlp']
+venues = ['nips','icml','iclr'] # Machine Learning
+venues = ["csur","air","igtr","arcras","arc","widm","rsl","rss","intpolrev","nrhm","oir","siamrev","ker"] # Survey
+venues = ['acl','naacl','colingconf', 'eacl','emnlp',
+          'aaai',
+          'cvpr','iccv','eccv','wacv','siggraph','siggrapha']
+period = [2022,2024]
+assert period[1] >= period[0]
 
 '''
 'all'
@@ -32,14 +72,13 @@ assert time_all[1] >= time_all[0]
 
 # custom keywords
 # keywords = [['optimal'],['transp'],['robust','adver','attack']]
-keywords = [['adversarial'],['bandit','reinfor','agent']]
+keywords = [['bandit','reinfor','agent']]
 keywords = [['gromov'],['wasserstein']]
-keywords = [['few'],['shot'],['robust']]
+keywords = [['few'],['shot']]
 keywords = [['density'],['estima']]
 keywords = [['advers'],['robust']]
 keywords = [['knowledge']]
 keywords = [['explor'],['the'],['role']]
-keywords = [['advers'],['robust']]
 keywords = [['machine'],['transla']]
 keywords = [['reprogra']]
 keywords = [['graph'],['robust']]
@@ -50,57 +89,26 @@ keywords = [['causal'],['model']]
 keywords = [['path'],['robust']]
 keywords = [['fourier']]
 keywords = [['vision'],['language']]
-keywords = [['adver'],['defen']]
 keywords = [['prompt'],['robust']]
 keywords = [['causal','treatment','confound','exchangeab','unmeasured','instrumental','survival']]
 keywords = [['priva']]
 keywords = [['weak'],['superv']]
 keywords = [['bias','fair']]
 keywords = [['efficie','fast']]
-keywords = [['diffu'],['robu']]
-keywords = [['gan','generative adver']]
-keywords = [['retriev'],['augment']]
-keywords = [['implicit'],['function']]
-keywords = [['multi'],['teacher']]
-keywords = [['compre'],['read']]
-keywords = [['prun','distil','quantiz','low-ran','factori']]
-keywords = [['multi'],['task'],['knowledge'],['distil']]
-keywords = [['name'],['entity'],['increme']]
-keywords = [['knowledge'],['distil']]
-keywords = [['increment'],['learn'],['few'],['shot']]
-keywords = [['adver','robust'],['class'],['increme']]
-keywords = [['online'],['distil']]
-keywords = [['decoup'],['distil'],['robust']]
-keywords = [['co-train','cotrain']]
-keywords = [['bias','fair'],['quantiz']]
-keywords = [['data'],['augme']]
 keywords = [['distribution'],['shift']]
 keywords = [['resampling']]
 keywords = [['trade'],['off']]
 keywords = [['importanc'],['sampl']]
-keywords = [['adversari'],['augment']]
-keywords = [['generative adversarial network','gan']]
-keywords = [['data'],['free']]
-keywords = [['data-free'],['adver','robust']]
-keywords = [['bias','fair']]
-keywords = [['fake'],['news']]
 keywords = [['influence'],['function']]
 keywords = [['multi-task','multitask']]
 keywords = [['whether','what',' is ','does','what','how','when','who','where','wrong','are','was ','were ']]
+keywords = [['investi','demyst','rethink','toward']]
 keywords = [['free'],['lunch']]
 keywords = [['bias'],['linear']]
-keywords = [['prun','distil','quantiz','low-ran','factori','low rank'],['robus','advers']]
-keywords = [['prun','distil','quantiz','low-ran','factori','low rank']]
 keywords = [['interpre','influence','explain','explana','attribution','lime','abduct','induct','mechanist','counterfac','elicit']]
 keywords = [['truthf','faithf','halluci']]
-keywords = [['continual']]
-keywords = [['detect','classifi'],['certain']]
-keywords = [['dynamic'],['detect','classifi']]
 keywords = [['generated'],['detect']]
-keywords = [['uncertain'],['detect','classifi']]
 keywords = [['uncertain']]
-keywords = [['bias'],['detect','classifi']]
-keywords = [['causal'],['detect','classifi']]
 keywords = [['uncertain'],['estimate','quantif']]
 keywords = [['cross-domain'],['classification','detection']]
 keywords = [['causal','treatment','confound','exchangeab','unmeasured','instrumental','survival','interven']]
@@ -114,7 +122,6 @@ keywords = [['error'],['correct']]
 keywords = [['simulat']]
 keywords = [['distill'],['knowledge'],['adver']]
 keywords = [['continual'],['attack']]
-keywords = [['increme','continual']]
 keywords = [['collapse']]
 keywords = [['continual'],['advers','robust']]
 keywords = [['continual'],['cross-domain']]
@@ -123,15 +130,36 @@ keywords = [['black'],['optimiz']]
 keywords = [['adaptation'],['classifi','detect']]
 keywords = [['increme','continual'],['classif','detection']]
 keywords = [['bayesian']]
-keywords = [['survey'],['event','timeline','diffusion']]
-keywords = [['survey'],['trust','fair']]
-ex_keywords = ['prompt','image','multimodal','bench','node','graph','vae',
-               'diffusion','bandit','reinforce','language','pre-train',
-               'off-poli','dataset','federate','video','scene','caption',
-               'amorti']
+keywords = [['adaptation']]
+keywords = [['shot']]
+keywords = [['prun','distil','quantiz','low-ran','factori','low rank']]
+keywords = [['survey'],['federat']]
+keywords = [['survey'],['causal']]
+keywords = [['survey'],['fair','bias']]
+keywords = [['survey','review'],['multi-modal']]
+keywords = [['rate'],['optimiza','optimisa']]
+keywords = [['pretrain','pre-train','plm'],['survey']]
+keywords = [['policy'],['making']]
+keywords = [['active'],['learning'],['survey']]
+keywords = [['continual'],['prompt']]
+keywords = [['classifi'],['detect']]
+keywords = [['advers','robust']]
+keywords = [['style'],['survey']]
+keywords = [['continual','increment']]
+keywords = [['bot'],['detect']]
+keywords = [['survey','review']]
+keywords = [['box embedding']]
+keywords = [['machine'],['translation']]
+keywords = [['interpre','explana','explain']]
+keywords = [['enhance'],['knowledge']]
+keywords = [['interpre','influence','explain','explana','attribution','lime','abduct','induct','mechanist','counterfac','elicit']]
+keywords = [['tune','tuning','downstream']]
+keywords = [['continual']]
 ex_keywords = []
 '''
 Keyword bank:
+survey, systematic review, state-of-the-are
+dynamics, temporal, implicit
 shift, robust, adversa, efficient, priva, shot, fair, safe, nois, defense, certif
 perturb, transferability, distill, memory, fast
 optimization, stochastic, bayesian, gradient, convex, minimax, convergence, constraint
@@ -189,7 +217,7 @@ lipschitz, ridge regression, lasso, least square, orthogonal
 
 def extract_venue_and_year(filename):
     # Define a regular expression pattern to match the desired format
-    pattern = re.compile(r'([a-zA-Z]+)(\d+)_full\.csv')
+    pattern = re.compile(r'([a-zA-Z0-9]+)(\d{4})')
 
     # Use the pattern to match the filename and extract groups (venue and year)
     match = pattern.match(filename)
@@ -213,7 +241,7 @@ def merge_csv_files(directory, venue):
     # Check if there are any CSV files in the directory
     if not csv_files:
         print("No CSV files found in the specified directory.")
-        return None
+        return pd.DataFrame()
 
     # Initialize an empty DataFrame to store the merged data
     merged_data = pd.DataFrame()
@@ -221,7 +249,7 @@ def merge_csv_files(directory, venue):
     # Iterate through each CSV file and merge them into the DataFrame
     for csv_file in csv_files:
         venue_, year_ = extract_venue_and_year(csv_file)
-        if not (year_ <= time_all[1] and year_ >= time_all[0]):
+        if not (year_ <= period[1] and year_ >= period[0]):
             continue
         file_path = os.path.join(directory, csv_file)
         df = pd.read_csv(file_path)
@@ -243,6 +271,7 @@ def is_valid_string(input_string, list_A, list_B):
     return True
 
 match_all = 0
+all_venue_match = pd.DataFrame()
 for venue in venues:
     print(venue)
     df = merge_csv_files('.', venue)
@@ -252,8 +281,9 @@ for venue in venues:
         matched = df[column].apply(lambda x: is_valid_string(x.lower(), keywords, ex_keywords))
         print(f'Number of matches in {venue.upper()}: {matched.sum()}')
         match_all += matched.sum()
-        df = df[matched > 0]
-
-        df[['title','venue']].to_csv(f'{venue}_selective.csv', index=False)
+        df = df[matched > 0][['title','venue']] # ['title','authors','venue'], turn on authors for author counting
+        all_venue_match = pd.concat([all_venue_match,df])
+        df.to_csv(f'{venue}_selective.csv', index=False)
 print('-'*50)
 print(f'Total number of matches: {match_all}')
+all_venue_match.to_csv('unified_selective.csv', index=False)
