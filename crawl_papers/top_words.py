@@ -6,24 +6,28 @@ import re
 import os
 import pandas as pd
 
-years = [2020,2021,2022,2023,2024] # Just used for "full", not necessary for "selective"
+years = [2023]
+years = [2020,2021,2022,2023] # Just used for "full", not necessary for "selective"
 column = 'title'
 venues = ['www']
 venues = ['naacl']
 venues = ['acl','emnlp']
-venues = ['nips','icml','iclr']
 venues = ['acl','naacl','colingconf', 'eacl','emnlp']
+venues = ['kdd']
+venues = ['nips','icml','iclr']
+venues = ['acl']
+venues = ['fat']
 '''
 [
 all,
 acl,emnlp,naacl,eacl,
-nips,icml,iclr,
+nips,icml,iclr,automl,copa,pgm
 cvpr,iccv,wacv,
 aaai,ijcai,uai,
 aistats
 ]
 '''
-rank_file = 'selective' # ['full','selective']
+rank_file = 'full' # ['full','selective']
 # assert not(rank_file == 'full' and venue == 'all'), 'Do not support search full for all venues'
 
 def extract_venue_and_year(filename):
@@ -47,7 +51,7 @@ def process_df(data):
     data['text'] = data['title']
 
     # Remove special characters and split into tokens
-    data['text'] = data['text'].apply(lambda x: re.sub('[:"!?,.()-]', '', str(x).lower()).split(' '))
+    data['text'] = data['text'].apply(lambda x: re.sub('[:"!?,.()-]', ' ', str(x).lower()).split(' '))
 
     # Count the occurrences of each word
     word_counts = Counter(word for words in data['text'] for word in words)
@@ -73,7 +77,8 @@ if "all" not in venues:
             if os.path.isfile(f'{venue}_{rank_file}.csv'):
                 df = pd.concat([df, pd.read_csv(f'{venue}_{rank_file}.csv')], ignore_index=True)
         unified_df = pd.concat([unified_df,df], ignore_index=True)
-
+        
+        print(df)
         word_list, word_count = process_df(df)
         print(f'Most common words in {venue.upper()}:')
         for word, count in zip(word_list,word_count):

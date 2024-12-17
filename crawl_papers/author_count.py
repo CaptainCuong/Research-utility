@@ -1,8 +1,8 @@
 import pandas as pd
 
-year = 2023
+year = 2024
 choice = "full" # ["selective","full"]
-venue = "iclr"
+venue = "kdd"
 '''
 'all'
 'unified'
@@ -29,7 +29,8 @@ else:
 df.dropna(inplace=True)
 
 # Split authors into a list of authors, just take the first and last authors
-df['authors'] = df['authors'].apply(lambda x: [x.split(', ')[0].strip(),x.split(', ')[-1].strip()] if ',' in x else [x.split(', ')[0].strip()])
+# df['authors'] = df['authors'].apply(lambda x: x.split(', ') if ',' in x else [x.split(', ')[0].strip()])
+df['authors'] = df['authors'].apply(lambda x: [x.split(', ')[0].strip(), x.split(', ')[-1].strip()] if ',' in x else [x.split(', ')[0].strip()])
 
 # Flatten the list of authors and count the occurrences
 authors_count = df.explode('authors')['authors'].value_counts()

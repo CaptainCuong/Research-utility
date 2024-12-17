@@ -9,7 +9,7 @@ import time
 import random
 
 years = [2024]
-venues = ['eacl']
+venues = ['acl']
 cite_query = False
 for venue in venues:
     assert venue in ['acl','emnlp','anlp','naacl','eacl','aacl','alta','bionlp','blackboxnlp','clinicalnlp','eamt','amta','textgraphs']

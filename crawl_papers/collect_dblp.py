@@ -5,7 +5,7 @@ import re
 from tqdm import tqdm
 
 years = [2016,2017,2018,2019,2020,2021,2022,2023,2024]
-years = [2020,2021,2022,2023,2024]
+years = [2021,2022,2023,2024]
 
 confs = [
         'sigmod','pods','vldb','icde', # Database
@@ -14,18 +14,21 @@ confs = [
         'kdd','icdm','cikm','pkdd','pakdd','sdm', # Data Mining
         'bigdataconf', # Big Data
         'sigir','jcdl','ecir','icadl', # Information Retrieval
-        'aaai','ijcai','uai','aistats','ecai', # Artificial Intelligence
+        'aaai','ijcai','uai','aistats','ecai', 'aied', # Artificial Intelligence
         'mm', # Multimedia
         'iros','icra','atal','corl','rss', # Robotics & Reinforcement Learning
-        'cvpr','iccv','eccv','wacv','siggraph','siggrapha', # Computer Vision
-        'nips','icml','iclr', # Machine Learning
-        'interspeech','icassp' # Speech
+        'cvpr','iccv','eccv','wacv','siggraph','siggrapha','icip', # Computer Vision
+        'nips','icml','iclr', 'automl', 'copa', 'pgm', # Machine Learning
+        'interspeech','icassp', # Speech
         'sp','tifsconf','ccs','uss','ndss', # Security
         'fat', # ACM Conference on Fairness, Accountability and Transparency (FAccT)
         'isaga', 'gdn', # Game Theory and Decision Theory
         'cdc', # Automation & Control Theory
         'chi','iui','hri','ACMdis', # Human-Computer Interaction
-        'ssci','gecco','cec' # Evolution Computation
+        'ssci','gecco','cec', # Evolution Computation
+        "dtrap", # Digital Threats: Research and Practice
+        "tops", # ACM Transactions on Privacy and Security
+        "colt","alt", # Learning Theory
         ]
 
 journals = [
@@ -63,7 +66,6 @@ journals = [
             # Computer Vision & Graphics
             "tip", # IEEE Transactions on Image Processing
             "ijcv", # International Journal of Computer Vision
-            "icip", # IEEE International Conference on Image Processing
             "jvcir", # Journal of Visual Communication and Image Representation
             "paa", # Pattern Analysis and Applications
             "tmi", # IEEE transactions on medical imaging
@@ -140,16 +142,14 @@ journals = [
             "trob", # IEEE Transactions on Robotics
             # Miscellanious
             "dgov", # Digital Government: Research and Practice
-            "dtrap", # Digital Threats: Research and Practice
             "health", # ACM Transactions on Computing for Healthcare
             "jdiq", # Journal of Data and Information Quality
             "taas", # ACM Transactions on Autonomous and Adaptive Systems
-            "tops", # ACM Transactions on Privacy and Security
             "tsc", # ACM Transactions on Social Computing
             ]
 
 venues = [
-            "ACMdis", # Designing Interactive Systems Conference
+            'fat'
          ]
 
 def get_links(venue, year):

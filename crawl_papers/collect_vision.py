@@ -4,8 +4,8 @@ import pandas as pd
 import json
 from tqdm import tqdm
 
-years = [2023]
-venues = ['ICCV']
+years = [2024]
+venues = ['CVPR']
 
 venues = list(map(str.upper,venues))
 for venue in venues:
