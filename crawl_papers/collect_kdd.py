@@ -6,7 +6,7 @@ from tqdm import tqdm
 from urllib.request import Request, urlopen
 
 years = [2020,2021,2022,2023]
-years = [2024]
+years = [2021,2022,2023,2024,2025]
 proc_link = {
 	2020:"https://www.kdd.org/kdd2020/proceedings/",
 	2021:"https://kdd.org/kdd2021/accepted-papers/toc",

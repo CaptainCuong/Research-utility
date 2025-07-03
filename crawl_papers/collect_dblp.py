@@ -5,7 +5,7 @@ import re
 from tqdm import tqdm
 
 years = [2016,2017,2018,2019,2020,2021,2022,2023,2024]
-years = [2021,2022,2023,2024]
+years = [2021,2022,2023,2024,2025]
 
 confs = [
         'sigmod','pods','vldb','icde', # Database
@@ -149,7 +149,7 @@ journals = [
             ]
 
 venues = [
-            'fat'
+            'kdd','icde','sigir','sigmod',
          ]
 
 def get_links(venue, year):
