@@ -149,7 +149,7 @@ journals = [
             ]
 
 venues = [
-            'kdd','icde','sigir','sigmod',
+            'acl'
          ]
 
 def get_links(venue, year):

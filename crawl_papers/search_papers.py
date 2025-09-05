@@ -61,9 +61,9 @@ venues = ['icml','nips','iclr','aaai']
 venues = ['csur']
 venues = ['all']
 venues = ['acl','emnlp']
-venues = ['icml','nips','iclr','aaai']
 venues = ['kdd'] # Database
-period = [2022,2025]
+venues = ['icml','nips','iclr','aaai']
+period = [2023,2025]
 assert period[1] >= period[0]
 
 '''
@@ -212,7 +212,7 @@ keywords = [['Initializati']]
 keywords = [['interpre','explana','explain']]
 keywords = [['machine-gener','ai-gener','llm-gener']]
 keywords = [['bilevel','optimi','converg'],['game','play','nash']]
-keywords = [['time'],['series']]
+keywords = [['retrieval'],['augmented','augmentation']]
 ex_keywords = ['reinforce','actor','graph','bandit','bayesian','link','policy']
 ex_keywords = []
 '''

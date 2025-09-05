@@ -7,7 +7,7 @@ from tqdm import tqdm
 import urllib
 import re
 
-years = [2024]
+years = [2025]
 venues = ['icml']
 cite_query = False
 
@@ -34,7 +34,6 @@ def get_title_authors_from_venue(venue, year):
     soup = BeautifulSoup(response.content, "html.parser")
     # print(type(soup.find_all('a', href=True)))
     print(soup.find_all('a', href=True)[10])
-    raise
     paper_info = []
     for link in tqdm(soup.find_all('a', href=True)):
         href = link['href']
