@@ -44,7 +44,7 @@ def search_files_by_name(pattern, folders):
 
 # Example usage:
 folders_to_search = ['all']
-name_pattern = 'hypersph'  # Example pattern to match .txt files
+name_pattern = 'best'  # Example pattern to match .txt files
 found_files = search_files_by_name(name_pattern, folders_to_search)
 
 print(f"Files matching the pattern '{name_pattern}':")

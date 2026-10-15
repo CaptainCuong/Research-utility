@@ -5,7 +5,8 @@ import json
 from tqdm import tqdm
 from urllib.request import Request, urlopen
 
-years = [2023,2022,2021,2020]
+years = [2022,2023,2024,2025]
+years = [2026]
 
 def get_title_authors_from_venue(year):
     proc_num = 36 + year-2022

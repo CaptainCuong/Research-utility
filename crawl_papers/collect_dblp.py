@@ -5,8 +5,7 @@ import re
 from tqdm import tqdm
 
 years = [2016,2017,2018,2019,2020,2021,2022,2023,2024]
-years = [2021,2022,2023,2024,2025]
-
+years = [2022,2023,2024,2025,2026]
 confs = [
         'sigmod','pods','vldb','icde', # Database
         'www','wsdm', # World Wide Web
@@ -29,6 +28,9 @@ confs = [
         "dtrap", # Digital Threats: Research and Practice
         "tops", # ACM Transactions on Privacy and Security
         "colt","alt", # Learning Theory
+        "sosp","issta","osdi","sigsoft","icse", # Software Engineering
+        "ppopp", "fast", "sc", "dac", "hpca", "micro", "asplos", "isca", "usenix", # Computer Architecture/ Parallel and Distributed Computer/Storage
+        "ifaamas", # International Foundation for Autonomous Agents and Multiagent Systems
         ]
 
 journals = [
@@ -136,6 +138,9 @@ journals = [
             "soco", # Soft Computing
             "swevo", # Swarm and Evolutionary Computation
             "evi", # Evolutionary Intelligence
+            # Software
+            "ase", # Automated Software Engineering
+            "pacmpl", # Proceedings of the ACM on Programming Languages
             # Robotics
             "ral", # Robotics: Science and Systems Conference
             "scirobotics", # Science Robotics
@@ -149,7 +154,7 @@ journals = [
             ]
 
 venues = [
-            'acl'
+            "ifaamas"
          ]
 
 def get_links(venue, year):

@@ -4,7 +4,7 @@ import pandas as pd
 import json
 from tqdm import tqdm
 
-years = [2021,2022,2023,2024,2025]
+years = [2021,2022,2023,2024,2025,2026]
 venues = ['CVPR']
 
 venues = list(map(str.upper,venues))

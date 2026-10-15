@@ -1,2 +1,4 @@
 craw_papers/*.csv
 craw_papers/save_collection
+__pycache__/
+*.pyc

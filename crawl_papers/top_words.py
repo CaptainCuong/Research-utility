@@ -6,8 +6,8 @@ import re
 import os
 import pandas as pd
 
-years = [2023]
 years = [2020,2021,2022,2023] # Just used for "full", not necessary for "selective"
+years = [2026]
 column = 'title'
 venues = ['www']
 venues = ['naacl']
@@ -16,7 +16,7 @@ venues = ['acl','naacl','colingconf', 'eacl','emnlp']
 venues = ['kdd']
 venues = ['nips','icml','iclr']
 venues = ['acl']
-venues = ['fat']
+venues = ['iclr']
 '''
 [
 all,
@@ -27,7 +27,9 @@ aaai,ijcai,uai,
 aistats
 ]
 '''
-rank_file = 'full' # ['full','selective']
+rank_file = 'oral' # ['full','selective']
+# rank_suffixes = ('full', 'oral', 'spotlight')  # file suffixes to load when rank_file == 'full'
+rank_suffixes = ('oral',)  # file suffixes to load when rank_file != 'selective'
 # assert not(rank_file == 'full' and venue == 'all'), 'Do not support search full for all venues'
 
 def extract_venue_and_year(filename):
@@ -47,8 +49,7 @@ def extract_venue_and_year(filename):
         return None, None
 
 def process_df(data):
-    # Combine 'title' and 'authors' columns into a single column 'text'
-    data['text'] = data['title']
+    data['text'] = data[column]
 
     # Remove special characters and split into tokens
     data['text'] = data['text'].apply(lambda x: re.sub('[:"!?,.()-]', ' ', str(x).lower()).split(' '))
@@ -69,16 +70,20 @@ unified_df = pd.DataFrame()
 if "all" not in venues:
     for venue in venues:
         df = pd.DataFrame()
-        if rank_file == "full":
+        if rank_file != "selective":
             for year in years:
-                if os.path.isfile(f'{venue}{year}_{rank_file}.csv'):
-                    df = pd.concat([df, pd.read_csv(f'{venue}{year}_{rank_file}.csv')], ignore_index=True)
+                for suffix in rank_suffixes:
+                    fname = f'{venue}{year}_{suffix}.csv'
+                    if os.path.isfile(fname):
+                        df = pd.concat([df, pd.read_csv(fname)], ignore_index=True)
         else:
             if os.path.isfile(f'{venue}_{rank_file}.csv'):
                 df = pd.concat([df, pd.read_csv(f'{venue}_{rank_file}.csv')], ignore_index=True)
         unified_df = pd.concat([unified_df,df], ignore_index=True)
-        
-        print(df)
+
+        if df.empty or column not in df.columns:
+            print(f'No data for {venue.upper()}, skipping.')
+            continue
         word_list, word_count = process_df(df)
         print(f'Most common words in {venue.upper()}:')
         for word, count in zip(word_list,word_count):
@@ -86,15 +91,17 @@ if "all" not in venues:
         print('-'*50)
         pd.DataFrame({'word':word_list,'count':word_count}).to_csv(f'{venue.lower()}_rank_keyword.csv',index=False)
 else:
-    csv_files = [file for file in os.listdir('.') if file.endswith(f'_{rank_file}.csv')]
+    csv_files = [file for file in os.listdir('.')
+                 if any(file.endswith(f'_{s}.csv') for s in rank_suffixes)]
     for csv_file in csv_files:
         venue_, year_ = extract_venue_and_year(csv_file)
         if year_ not in years:
             continue
         unified_df = pd.concat([unified_df, pd.read_csv(csv_file)], ignore_index=True)
 
-word_list_unf, word_count_unf = process_df(unified_df)
-if "all" not in venues:
-    pd.DataFrame({'word':word_list_unf,'count':word_count_unf}).to_csv(f'unified_rank_keyword.csv',index=False)
+if unified_df.empty or column not in unified_df.columns:
+    print('No unified data to process.')
 else:
-    pd.DataFrame({'word':word_list_unf,'count':word_count_unf}).to_csv(f'all_rank_keyword.csv',index=False)
+    word_list_unf, word_count_unf = process_df(unified_df)
+    out = 'unified_rank_keyword.csv' if "all" not in venues else 'all_rank_keyword.csv'
+    pd.DataFrame({'word': word_list_unf, 'count': word_count_unf}).to_csv(out, index=False)

@@ -2,7 +2,13 @@ import re
 import os
 import pandas as pd
 
+# column = 'keywords'
 column = 'title'
+valid_suffixes = ('_full.csv', '_oral.csv', '_spotlight.csv', '_poster.csv',
+                  '_reject.csv', '_withdrawn.csv', '_desk_rejected.csv')
+valid_suffixes = ('_spotlight .csv','_oral.csv')
+valid_suffixes = ('_full.csv',)
+
 # Journals
 venues = ["ai","tnn","jmlr","tcyb","natmi","pr","ijon","jmlr","tfs","nca","apin"] # Artificial Intelligence
 venues = ["colingjour","tacl","csl","talip","lre"] # Language
@@ -59,11 +65,25 @@ venues = ['iccv','eccv','cvpr']
 venues = ['kdd','icdm','acl','emnlp']
 venues = ['icml','nips','iclr','aaai']
 venues = ['csur']
-venues = ['all']
 venues = ['acl','emnlp']
 venues = ['kdd'] # Database
-venues = ['icml','nips','iclr','aaai']
-period = [2023,2025]
+venues = ['icml']
+venues = ['aaai']
+venues = ["compsec","ieeesp","tdsc","tifsjour","istr",'sp','tifsconf','ccs','uss','ndss'] # Security
+venues = ['icml','nips','iclr','aaai','acl','emnlp','iccv','eccv','cvpr','kdd','icdm','sdm','www','sigir','icde','mm','naacl','colingconf', 'eacl']
+venues = ['acl']
+venues = ['aaai','www',]
+venues = ['kdd','emnlp','acl']
+venues = ['icml','nips','iclr','acl','emnlp','aaai','naacl','colingconf', 'eacl','www','kdd','icdm','sdm','sigir','icde','cvpr','iccv','eccv','mm']
+venues = ['kdd','emnlp','acl']
+venues = ['all']
+venues = ["sosp","issta","osdi","sigsoft","icse","ase","pacmpl"]
+venues = ['icml','nips','iclr','acl','emnlp']
+venues = ['icml','nips','iclr','acl','emnlp','aaai','www','kdd','cvpr','iccv','eccv','wacv','siggraph','siggrapha',]
+venues = ['aamas']
+venues = ['icml','nips','iclr','acl','emnlp','naacl','eacl','kdd','aaai',"compsec","ieeesp","tdsc","tifsjour","istr",'sp','tifsconf','ccs','uss','ndss','www','interspeech','chi','aamas']
+venues = ['icml','nips','iclr','aamas']
+period = [2025,2026]
 assert period[1] >= period[0]
 
 '''
@@ -79,6 +99,7 @@ assert period[1] >= period[0]
 'nips','icml','iclr', # Machine Learning
 'interspeech','icassp' # Speech
 'sp','tifs','ccs','uss','ndss', # Security
+'stoc','focs','soda','colt' # Theoretical Computer Science
 '''                
 
 # custom keywords
@@ -188,7 +209,6 @@ keywords = [['adversari']]
 keywords = [['causal']]
 keywords = [['self-super']]
 keywords = [['contrastive learning']]
-keywords = [['sgd','adamw','gradient','landscape']]
 keywords = [['sharpness'],['aware']]
 keywords = [['kv'],['cache']]
 keywords = [['mixup','mix-up']]
@@ -212,8 +232,45 @@ keywords = [['Initializati']]
 keywords = [['interpre','explana','explain']]
 keywords = [['machine-gener','ai-gener','llm-gener']]
 keywords = [['bilevel','optimi','converg'],['game','play','nash']]
-keywords = [['retrieval'],['augmented','augmentation']]
-ex_keywords = ['reinforce','actor','graph','bandit','bayesian','link','policy']
+keywords = [['reinforc','bandit','agent','policy','reward','mdp','markov']]
+keywords = [['rag ','retriev-augmented','retrieval augmented']]
+keywords = [['long'],['context']]
+keywords = [['uncertainty'],['language','code','llm','rag','agent','token','generation','logit']]
+keywords = [['uncertainty'],['language','code','llm','rag','agent','token','generation']]
+keywords = [['reasoning']]
+keywords = [['when','where','how','what','why','who']]
+keywords = [['agent'],['terminal','code','coding','web','computer'],['bench']]
+keywords = [['agent'],['terminal','code','coding','web','computer']]
+keywords = [['skill','agent','scaffold','harness']]
+keywords = [['code','coding','software']]
+keywords = [['grpo']]
+keywords = [['uncertain']]
+keywords = [['language','llm','transformers','In-context','dynamic','Long-Context','Thought','reasoning']]
+keywords = [['collab','coordina','multi-agent','multiagent','communi'],['reinfor']]
+keywords = [['machine generated','deepfake','generative ai'],['detect']]
+keywords = [['latent'],['reasoning','agent','language','llm','steer','planning','policy','halluci']]
+keywords = [['sgd','adamw','gradient','landscape']]
+keywords = [['optimiz']]
+keywords = [['bitter']]
+keywords = [['code','coding','software']]
+keywords = [['dynamic']]
+keywords = [['data'],['science']]
+keywords = [['mode'],['connect']]
+keywords = [['code','coding','program','software','engineer','unit test','sql','terminal','data scien','swe'],['agent']]
+keywords = [['mixture'],['causal']]
+keywords = [['self'],['distill'],['policy']]
+keywords = [['molecule','protein','drug']]
+keywords = [['agent'],['safe','trust','attack','robust','adversarial','hallucination','halluci']]
+keywords = [['agent'],['collab','cooper','coordina','multi-agent','multiagent','communi']]
+keywords = [['inver'],['rein']]
+keywords = [['bitter']]
+keywords = [['3d','point cloud']]
+keywords = [['transition','dynamics','emergen']]
+keywords = [['suboptimal'],['policy','reinforc','bandit','agent','reward','mdp','markov','demonstration']]
+keywords = [['mask']]
+keywords = [['limit']]
+keywords = [['high'],['dimension']]
+ex_keywords = ['limited']
 ex_keywords = []
 '''
 Keyword bank:
@@ -290,12 +347,14 @@ def extract_venue_and_year(filename):
         # Return None if the pattern doesn't match
         return None, None
 
-def merge_csv_files(directory, venue):
+def merge_csv_files(directory, venue, required_column=None):
     # Get a list of all CSV files in the directory
     if venue == "all":
-        csv_files = [file for file in os.listdir(directory) if file.endswith('_full.csv')]
+        csv_files = [f for f in os.listdir(directory)
+                     if any(f.endswith(s) for s in valid_suffixes)]
     else:
-        csv_files = [file for file in os.listdir(directory) if file.endswith('_full.csv') and file.startswith(venue)]
+        csv_files = [f for f in os.listdir(directory)
+                     if any(f.endswith(s) for s in valid_suffixes) and f.startswith(venue)]
 
     # Check if there are any CSV files in the directory
     if not csv_files:
@@ -308,10 +367,13 @@ def merge_csv_files(directory, venue):
     # Iterate through each CSV file and merge them into the DataFrame
     for csv_file in csv_files:
         venue_, year_ = extract_venue_and_year(csv_file)
-        if not (year_ <= period[1] and year_ >= period[0]):
+        if year_ is None or not (year_ <= period[1] and year_ >= period[0]):
             continue
         file_path = os.path.join(directory, csv_file)
         df = pd.read_csv(file_path)
+        if required_column and required_column not in df.columns:
+            print(f"  Skipping {csv_file}: no '{required_column}' column")
+            continue
         df['venue'] = [venue_.upper()+str(year_)[-2:] if venue_ != 'neurips' else 'NeurIPS'+str(year_)[-2:] for i in range(len(df.index))]
         merged_data = pd.concat([merged_data, df], ignore_index=True)
 
@@ -333,10 +395,11 @@ match_all = 0
 all_venue_match = pd.DataFrame()
 for venue in venues:
     print(venue)
-    df = merge_csv_files('.', venue)
+    df = merge_csv_files('.', venue, required_column=column)
+    if len(df.index) == 0 or column not in df.columns:
+        continue
+    df = df.dropna(subset=[column])
     if len(df.index) > 0:
-        df = df.dropna(subset=[column])
-
         matched = df[column].apply(lambda x: is_valid_string(x.lower(), keywords, ex_keywords))
         print(f'Number of matches in {venue.upper()}: {matched.sum()}')
         match_all += matched.sum()
